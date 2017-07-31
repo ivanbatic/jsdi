@@ -1,17 +1,10 @@
 import {DI_CONFIG} from '../di-config';
 import {TokenNotFoundError} from './errors';
+import {DIType} from './type';
 
-export type Token = Object;
-
-export type DIType = {
-    useValue?: any;
-    useClass?: any;
-    useFactory?: any;
-    deps?: any[];
-};
 
 class Container {
-    private registry = new Map<Token, DIType>();
+    private registry = new Map<Object, DIType>();
 
 
     constructor(diConfig: Object) {
@@ -38,6 +31,10 @@ class Container {
         }
 
         if (tokenValue.useClass) {
+            if (tokenValue.__cachedInstance) {
+                return tokenValue.__cachedInstance;
+            }
+
             const val             = tokenValue.useClass;
             const hostConstructor = val.prototype.constructor;
 
@@ -55,8 +52,11 @@ class Container {
 
                 return Injector.get(fn.name);
             });
+            const instance = new val(...callArgs);
 
-            return new val(...callArgs);
+            tokenValue.__cachedInstance = instance;
+
+            return instance;
         }
 
         if (tokenValue.useFactory) {
