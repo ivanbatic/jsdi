@@ -1,10 +1,9 @@
 import {DI_CONFIG} from '../di-config';
-import {TokenNotFoundError} from './errors';
 import {DIType} from './type';
 
 
 class Container {
-    private registry = new Map<Object, DIType>();
+    private registry = new Map<string, DIType>();
 
 
     constructor(diConfig: Object) {
@@ -21,7 +20,7 @@ class Container {
         }
 
         if (!this.registry.has(token)) {
-            throw new TokenNotFoundError(`Token ${token} does not exist in the registry.`);
+            throw new Error(`Token ${token} does not exist in the registry.`);
         }
 
         const tokenValue = this.registry.get(token);
