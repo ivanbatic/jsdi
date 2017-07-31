@@ -1,0 +1,15 @@
+{
+  "name": "jsdi",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ivan Batic <ivan.batic@live.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "reflect-metadata": "^0.1.10",
+    "typescript": "^2.4.2"
+  }
+}
